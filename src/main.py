@@ -13,10 +13,11 @@ def analyze_image(image_path):
         print("Error. please check file path")
         return None, None
     
+    
     #convert image to grayscale
     grayscale_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     #pixels with <125 intensity set to 0, otherwise set it to 255
-    _, threshold_image = cv2.threshold(grayscale_image, 125, 255, cv2.THRESH_BINARY)
+    _, threshold_image = cv2.threshold(grayscale_image, 105, 255, cv2.THRESH_BINARY)
 
     #calculate % of land v water
     land_percentage = calculate_land_percentage(threshold_image)
@@ -24,7 +25,7 @@ def analyze_image(image_path):
     return land_percentage, water_percentage
 
 def calculate_land_percentage(image):
-    land_pixels = cv2.countNonZero()
+    land_pixels = cv2.countNonZero(image)
     total_pixels = image.size
     land_percentage = (land_pixels/total_pixels) * 100
     return land_percentage
